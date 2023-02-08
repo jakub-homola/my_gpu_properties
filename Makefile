@@ -1,5 +1,5 @@
 
-.PHONY: clean cuda hip sycl
+.PHONY: clean cuda hip dpcpp hipsycl
 
 clean:
 	rm -f *.x
@@ -10,7 +10,7 @@ cuda: my_gpu_properties_cuda.x
 hip: my_gpu_properties_hip.x
 	./$<
 
-syclintel: my_sycl_device_properties_intel.x
+dpcpp: my_sycl_device_properties_intel.x
 	./$<
 
 hipsycl: my_sycl_device_properties_hipsycl.x
