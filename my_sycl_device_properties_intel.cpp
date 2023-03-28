@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 
-#include <CL/sycl.hpp>
+#include <sycl/sycl.hpp>
 
 
 
@@ -23,26 +23,17 @@ const char * device_type_to_str(sycl::info::device_type type)
 
 void print_device_properties(const sycl::device & device)
 {
-    std::string name = device.get_info<sycl::info::device::name>();
-    sycl::info::device_type type = device.get_info<sycl::info::device::device_type>();
-    const char * type_str = device_type_to_str(type);
-    std::string vendor = device.get_info<sycl::info::device::vendor>();
-    uint32_t vendor_id = device.get_info<sycl::info::device::vendor_id>();
-    uint32_t cus = device.get_info<sycl::info::device::max_compute_units>();
-    uint64_t global_mem = device.get_info<sycl::info::device::global_mem_size>();
-    std::string version = device.get_info<sycl::info::device::version>();
-    std::string driver_version = device.get_info<sycl::info::device::driver_version>();
-    uint32_t mem_base_addr_align = device.get_info<sycl::info::device::mem_base_addr_align>();
-
-    printf("  Name: %s\n", name.c_str());
-    printf("  Vendor: %s\n", vendor.c_str());
-    printf("  Vendor ID: %u\n", vendor_id);
-    printf("  Type: %s\n", type_str);
-    printf("  Compute units: %u\n", cus);
-    printf("  Global memory: %lu MiB\n", global_mem >> 20);
-    printf("  Version: %s\n", version.c_str());
-    printf("  Driver version: %s\n", driver_version.c_str());
-    printf("  Memory alignment: %u\n", mem_base_addr_align);
+    printf("  Platform name: %s\n",        device.get_info<sycl::info::device::platform>().get_info<sycl::info::platform::name>().c_str());
+    printf("  Platform vendor: %s\n",      device.get_info<sycl::info::device::platform>().get_info<sycl::info::platform::vendor>().c_str());
+    printf("  Platform version: %s\n",     device.get_info<sycl::info::device::platform>().get_info<sycl::info::platform::version>().c_str());
+    printf("  Device name: %s\n",          device.get_info<sycl::info::device::name>().c_str());
+    printf("  Device vendor: %s, ID %u\n", device.get_info<sycl::info::device::vendor>().c_str(), device.get_info<sycl::info::device::vendor_id>());
+    printf("  Device version: %s\n",       device.get_info<sycl::info::device::version>().c_str());
+    printf("  Driver version: %s\n",       device.get_info<sycl::info::device::driver_version>().c_str());
+    printf("  Type: %s\n",                 device_type_to_str(device.get_info<sycl::info::device::device_type>()));
+    printf("  Compute units: %u\n",        device.get_info<sycl::info::device::max_compute_units>());
+    printf("  Global memory: %lu MiB\n",   device.get_info<sycl::info::device::global_mem_size>() >> 20);
+    printf("  Memory alignment: %u\n",     device.get_info<sycl::info::device::mem_base_addr_align>());
 }
 
 int main()
