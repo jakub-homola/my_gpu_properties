@@ -12,7 +12,7 @@ void print_properties_for_gpu(int gpu_idx)
 
     printf("Device %d:\n", gpu_idx);
     printf("  Name: %s\n", p.name);
-    printf("  Compute capability: %d.%d\n", p.major, p.minor);
+    printf("  GCN architecture: %d\n", p.gcnArch);
     printf("  Compute units: %d\n", p.multiProcessorCount);
     printf("  Warp size: %d\n", p.warpSize);
     printf("  ECC memory enabled: %s\n", p.ECCEnabled ? "yes" : "no");
